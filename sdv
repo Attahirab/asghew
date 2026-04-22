@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Habit Tracker</title>
+<style>
+  body { font-family: Arial; background: #0f0f0f; color: #fff; text-align: center; padding: 50px; }
+  h1 { color: #0f0; }
+  ul { list-style: none; padding: 0; }
+  li { background: #1f1f1f; margin: 10px auto; padding: 15px; width: 300px; border-radius: 8px; cursor: pointer; }
+  li.completed { text-decoration: line-through; color: #0f0; }
+  button { background: #0f0; color: #000; border: none; padding: 10px 20px; margin: 20px; border-radius: 5px; cursor: pointer; }
+</style>
+</head>
+<body>
+<h1>🌱 Daily Habits</h1>
+<input type="text" id="habitInput" placeholder="New habit...">
+<button onclick="addHabit()">Add</button>
+<ul id="habits"></ul>
+
+<script>
+let habits = [];
+function addHabit() {
+  const input = document.getElementById('habitInput');
+  if (input.value.trim() === '') return;
+  habits.push({name: input.value, completed: false});
+  input.value = '';
+  render();
+}
+function toggleHabit(index) {
+  habits[index].completed = !habits[index].completed;
+  render();
+}
+function render() {
+  const ul = document.getElementById('habits');
+  ul.innerHTML = '';
+  habits.forEach((habit, i) => {
+    const li = document.createElement('li');
+    li.textContent = habit.name;
+    if (habit.completed) li.classList.add('completed');
+    li.onclick = () => toggleHabit(i);
+    ul.appendChild(li);
+  });
+}
+</script>
+</body>
+</html>
